@@ -1,8 +1,8 @@
 1. Remember to check the boundary. This can also be done to add an outer space to ease the checking effort.
 2. Recursive thinking. f(n) = f(n - 1)... ?
 3. Sort first helps.
-
-
+4. Consider all of the input possibilities: empty string, the same length, positive or negtive intergers, what's the input type? float or int or positives, etc.
+5. Consider the boundary of the input integers, whether they will exceed the INT_MAX or INT_MIN.
 
 
 
