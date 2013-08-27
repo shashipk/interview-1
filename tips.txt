@@ -7,4 +7,5 @@
 7. Be careful of the scope of the variables and the initialization.
 8. Consider the head bit added due to the carrier.
 9. The logic of solving problems is to separating into small problems with a good difinition of classification.
+10. Clarify procedures and functions.
 
