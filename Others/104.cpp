@@ -7,36 +7,29 @@ vector<vector<int> > table;
 int main() {
 	int f, v;
 	cin >> f >> v;
-	table = vector<vector<int> >(f, vector<int>(v));
-	for (int i = 0; i < f; ++i) {
-		for (int j = 0; j < v; ++j) {
+	table = vector<vector<int> >(f + 1, vector<int>(v + 1));
+	for (int i = 1; i <= f; ++i) {
+		for (int j = 1; j <= v; ++j) {
 			cin >> table[i][j];
 		}
 	}
-	vector<vector<vector<int> > > vases(2, vector<vector<int> >(v + 1, vector<int>(f)));
-	vector<vector<int> > value(2, vector<int>(v + 1));
-	value[0][0] = 0;
-	for (int i = 0; i <= f; ++i) {
-		if (i > 0) value[i % 2][i] = value[(i - 1) % 2][i - 1] + table[i - 1][i - 1];
-		for (int j = i + 1; j <= v; ++j) {
-			if (i == 0 || j == 0) {
-				value[i % 2][j] = 0;
-				continue;
-			}
-			if (value[i % 2][j - 1] >= value[(i - 1) % 2][j - 1] + table[i - 1][j - 1]) {
-				value[i % 2][j] = value[i % 2][j - 1];
-				vases[i % 2][j] = vases[i % 2][j - 1];
-			}
-			else {
-				value[i % 2][j] = value[(i - 1) % 2][j - 1] + table[i - 1][j - 1];
-				vases[i % 2][j] = vases[(i - 1) % 2][j - 1];
-				vases[i % 2][j][i - 1] = j;
-			}
-		}
+	vector<vector<int> > value(f + 1, vector<int>(v + 1));
+	
+	for (int i = 1; i <= f; ++i) {
+		value[i][i] = value[(i - 1)][i - 1] + table[i][i];
+		for (int j = i + 1; j <= v; ++j) 
+				value[i][j] = max(value[i][j - 1], value[(i - 1)][j - 1] + table[i][j]);
 	}
-	cout << value[f % 2][v] << endl;
-	for (int i = 0; i < f; ++i) {
-		cout << vases[f % 2][v][i] << " ";
+		
+	cout << value[f][v] << endl;
+	vector<int> vases(f + 1);
+	for (int i = f, j = v; i >= 1 && j >= 1;) {
+		if (value[i][j] == value[i - 1][j - 1] + table[i][j])
+			vases[i--] = j--;
+		else j--;
+	}
+	for (int i = 1; i <= f; ++i) {
+		cout << vases[i] << " ";
 	}
 	cout << endl;
 	return 0;
